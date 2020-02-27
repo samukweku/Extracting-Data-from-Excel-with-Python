@@ -5,29 +5,12 @@
 import pandas as pd
 import numpy as np
 import janitor
-from more_itertools import windowed, chunked
-from openpyxl import load_workbook
 ```
 
 ### Case 4: Pivot Table - Single Headers
-![pivot-hierarchy.png](attachment:pivot-hierarchy.png) Image Courtesy:[Nacnudus](https://github.com/nacnudus/spreadsheet-munging-strategies/tree/master/images)<br>
-
-
-![pivot-hierarchy_edit.png](attachment:pivot-hierarchy_edit.png) 
-
-#### Task Outline:
-1. Remove null rows
-2. Get Students, Fields, and Subjects into separate columns
-3. Create appropriate headers
 
 
 ```python
-#Read in file
-#import relevant libraries
-
-import janitor
-import numpy as np
-
 df = (pd.read_excel('worked-examples.xlsx',
                      sheet_name='pivot-hierarchy',
                      header=None)
@@ -128,6 +111,8 @@ df
 
 
 ```python
+# Helper Functions
+
 def extract_field_col(df,col,ref,new_col):
     '''
     Creates the field column and returns a dataframe.
@@ -158,7 +143,11 @@ def remove_rows(df):
 
 
 ```python
+#Tidy data processing
+
 (df
+ #remove_empty is a function in pyjanitor
+ #it removes completely empty rows and columns
  .remove_empty()
  .pipe(extract_field_col,2,1,'Field')
  .pipe(fill_col,'Field')
@@ -263,8 +252,6 @@ def remove_rows(df):
 
 
 ### Case 5 : Implied Multiples
-![implied-multiples.png](attachment:implied-multiples.png)
- Image Courtesy:[Nacnudus](https://github.com/nacnudus/spreadsheet-munging-strategies/tree/master/images)
 
 
 ```python
@@ -304,10 +291,6 @@ df = (pd.read_excel('worked-examples.xlsx',
 ```
 
 ### Case 6: Table - Centre-aligned headers
-![pivot-centre-aligned.png](attachment:pivot-centre-aligned.png) Image Courtesy:[Nacnudus](https://github.com/nacnudus/spreadsheet-munging-strategies/tree/master/images)
-
-
-![pivot_aligned_edit.png](attachment:pivot_aligned_edit.png)
 
 
 ```python
@@ -347,12 +330,10 @@ print(rows,cols)
 
 
 ```python
-df = (pd
- .read_excel('worked-examples.xlsx',
-             sheet_name='pivot-centre-aligned',
-             header=None)
-
-)
+df = (pd.read_excel('worked-examples.xlsx',
+                    sheet_name='pivot-centre-aligned',
+                    header=None)
+     )
 
 df
 ```
@@ -1106,8 +1087,3 @@ outcome
 </div>
 
 
-
-
-```python
-
-```
